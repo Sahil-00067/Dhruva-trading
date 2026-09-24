@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "channels": {
+    "browser": {
+      "enabled": true
+    }
+  },
+  "watchlist": [
+    "NIFTY 50",
+    "RELIANCE",
+    "TCS"
+  ]
+}

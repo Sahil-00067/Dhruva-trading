@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_cache:/app/.cache
+      - backend_creds:/app/.dhan_creds.json
+      - backend_notifications:/app/.notifications.json
+      - backend_trades:/app/.paper_trades.json
+      - backend_positions:/app/.paper_positions.json
+      - backend_state:/app/.notification_state.json
+    environment:
+      - PYTHONUNBUFFERED=1
+      # Optional: Add AI key for LLM reviews
+      # - DHRUVA_AI_KEY=sk-your-key-here
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_cache:
+  backend_creds:
+  backend_notifications:
+  backend_trades:
+  backend_positions:
+  backend_state:

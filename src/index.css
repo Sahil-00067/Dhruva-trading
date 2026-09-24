@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Light theme: warm off-white with subtle jade/brass tint */
+  body {
+    @apply bg-paper text-ink-text font-sans;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 0% 0%, rgba(46,158,143,0.07), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(201,162,75,0.05), transparent);
+    background-attachment: fixed;
+  }
+
+  /* Dark theme: deep space with jade glow */
+  .dark body {
+    background: #0A1628;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(46,158,143,0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,162,75,0.05), transparent);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+
+  .num {
+    @apply font-mono tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  ::selection {
+    @apply bg-jade/25;
+  }
+}
+
+@layer components {
+  /* Live pulse dot */
+  .live-dot {
+    @apply relative flex h-2 w-2;
+  }
+
+  .live-dot::before {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-sage;
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+  .live-dot::after {
+    content: '';
+    @apply relative z-10 block h-2 w-2 rounded-full bg-sage;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(111, 185, 143, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(111, 185, 143, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(111, 185, 143, 0); }
+  }
+
+  /* Shimmer loading */
+  .shimmer {
+    @apply animate-pulse bg-gradient-to-r from-paper-3 via-paper-2 to-paper-3 dark:from-ink-3 dark:via-ink-2 dark:to-ink-3;
+    background-size: 200% 100%;
+  }
+
+  /* Slide-in panel */
+  .slide-in {
+    animation: slideIn 0.2s ease-out;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Card: light = white with subtle shadow and paper-3 border, dark = deep space */
+  .card {
+    @apply border border-paper-3 bg-paper-2 dark:border-ink-3 dark:bg-ink-2;
+  }
+
+  /* Panel: same as card but without the shadow */
+  .panel {
+    @apply border border-paper-3 bg-paper-2 dark:border-ink-3 dark:bg-ink-2;
+  }
+
+  /* Gradient accent bar for header */
+  .brand-bar {
+    @apply h-[2px] bg-gradient-to-r from-jade via-brass to-jade/30;
+  }
+}
+
+@layer utilities {
+  /* Scrollbar */
+  .scroll-quiet::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  .scroll-quiet::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scroll-quiet::-webkit-scrollbar-thumb {
+    @apply bg-paper-3 dark:bg-ink-3;
+  }
+
+  /* Jade gradient text for key metrics */
+  .grad-jade {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #2E9E8F 0%, #3FB0A0 50%, #1F7A6E 100%);
+  }
+
+  .grad-brass {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #D4AF5A 0%, #C9A24B 50%, #A8893A 100%);
+  }
+
+  /* Colored card variants */
+  .card-jade {
+    @apply border-jade/30 bg-jade/5 dark:bg-jade/10;
+  }
+
+  .card-brass {
+    @apply border-brass/30 bg-brass/5 dark:bg-brass/10;
+  }
+
+  .card-sage {
+    @apply border-sage/30 bg-sage/5 dark:bg-sage/10;
+  }
+
+  .card-clay {
+    @apply border-clay/30 bg-clay/5 dark:bg-clay/10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

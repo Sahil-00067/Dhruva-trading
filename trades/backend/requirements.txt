@@ -1,0 +1,7 @@
+# Backtest engine service dependencies (Python 3.11+; tested target 3.14).
+fastapi>=0.115
+uvicorn[standard]>=0.30
+yfinance>=0.2.40
+pandas>=2.2
+bcrypt 
+PyJWT 
